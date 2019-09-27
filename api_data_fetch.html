@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title></title>
+
+  </head>
+  <body>
+    <div class="page-header">
+      <h1>Share Everything</h1>
+    </div>
+    <div class="container" id='main'>
+      <table class="table table-bordered table-hover">
+        <tr v-for="blog in blogs.data">
+          <td>
+            {{ blog.title }}
+            <br>
+            {{ blog.text }}
+            <br>
+            by <img :src="blog.author.image_url" :alt="blog.author.username" height=20 width="20">
+            {{ blog.author.first_name }} {{ blog.author.last_name }}
+            <br>
+            on: {{ blog.created_at }}
+            <a href="#" @click="get_blog(blog.id)">Read More...</a>
+            <div v-if="blog_by_id">
+              <table>
+                <tr v-for="item in blog_by_id.data">
+                  <td>
+                    {{ item }}
+                  </td>
+                </tr>
+              </table>
+              {{ blog_by_id.data }}
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div class="loading" v-if="loading===true">Hang on. We are Loading results...</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
