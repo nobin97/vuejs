@@ -2,41 +2,66 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <title></title>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Share Everything</title>
   </head>
-  <body>
-    <div class="page-header">
-      <h1>Share Everything</h1>
-    </div>
-    <div class="container" id='main'>
-      <table class="table table-bordered table-hover">
-        <tr v-for="blog in blogs.data">
-          <td>
-            {{ blog.title }}
-            <br>
-            {{ blog.text }}
-            <br>
-            by <img :src="blog.author.image_url" :alt="blog.author.username" height=20 width="20">
-            {{ blog.author.first_name }} {{ blog.author.last_name }}
-            <br>
-            on: {{ blog.created_at }}
-            <a href="#" @click="get_blog(blog.id)">Read More...</a>
-            <div v-if="blog_by_id">
-              <table>
-                <tr v-for="item in blog_by_id.data">
-                  <td>
-                    {{ item }}
-                  </td>
-                </tr>
-              </table>
-              {{ blog_by_id.data }}
+  <body >
+    <div class="mainapp" id="main-app">
+      <div class="page-header ml-3 mt-3 mb-5 sticky-top" style="background-color:white;">
+        <div class="row">
+          <div class="col-lg-9">
+            <h1 class="">Share Everything</h1>
+          </div>
+          <div class="col">
+            <h5 class="">Share</h5>
+          </div>
+          <div class="col">
+            <h5 class="">nobin97</h5>
+          </div>
+          <div class="col">
+            <h5 class="">Sign out</h5>
+          </div>
+        </div>
+      </div>
+      <div class="leaderboard ml-1 mr-3" id="leaderboard" style="float:right; width:23%;">
+        <div class="card">
+          <h3 class="ml-2 mt-1">LeaderBoard</h3>
+          <div class="card mt-1 ml-3 mr-3 mb-3" v-for="(item, index) in leaderboard.data">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-2">
+                  <h2>{{ index+1 }}</h2>
+                </div>
+                <div class="col-md-6">
+                  <img :src="item.user.image_url" :alt="item.user.username" height=40 width="40" style="border-radius:50%;">
+                  {{ item.user.username }}
+                </div>
+                <div class="col">
+                  {{ item.score }}
+                </div>
+              </div>
             </div>
-          </td>
-        </tr>
-      </table>
-      <div class="loading" v-if="loading===true">Hang on. We are Loading results...</div>
+          </div>
+          <div class="loading" v-if="lboard_loading===true">Hang on. We are Loading results...</div>
+        </div>
+      </div>
+      <div class="container ml-5" id='main' style="max-width:70%;">
+        <div class="card mb-3" v-for="blog in blogs.data" >
+          <div class="card-body">
+            <h2 class="card-title">{{ blog.title }}</h2>
+            <small>{{ blog.created_at }} <img :src="blog.author.image_url" :alt="blog.author.username" height=25 width="25" style="border-radius:50%;">
+           {{ blog.author.username }} ({{ blog.author.first_name }} {{ blog.author.last_name }}) </small>
+            <p class="card-text mt-2">{{ blog.text }}</p>
+            <hr>
+            <div class="">
+              <button class="btn btn-link" @click="up_vote(blog.id)"><img src="assets/images/claps.png" alt="Claps" height="30" width="30"></button>  {{ blog.upvote_count }}
+            </div>
+          </div>
+        </div>
+        <div class="loading" v-if="blogs.data===[]">0 Results Found. Come back later..</div>
+        <div class="loading" v-if="loading===true">Hang on. We are Loading results...</div>
+        <div class="loading" v-else-if="load_error===true">We are having trouble loading results at the moment. Try again later...</div>
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
