@@ -11,7 +11,8 @@ var mainapp = new Vue({
     load_error: false,
     leaderboard: [],
     blog_by_id: [],
-    token:'Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMmVjZGNlNWEtNzhiYy00NmViLTk4ZmMtNzUyMTRiNjhkYzA3IiwiZXhwIjoxNTY5Njk0NTM2LCJlbWFpbCI6Im5vYmluOTdAZ21haWwuY29tIiwidXNlcm5hbWUiOiJub2Jpbjk3QGdtYWlsLmNvbSJ9.ZJuLTZfYi5RXy2xt_DlnkM-6bSlrtNjgzEt2Df6Isf0'
+    token: 'Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Njk3NzA1NzgsInVzZXJfaWQiOiIyZWNkY2U1YS03OGJjLTQ2ZWItOThmYy03NTIxNGI2OGRjMDciLCJlbWFpbCI6Im5vYmluOTdAZ21haWwuY29tIiwidXNlcm5hbWUiOiJub2Jpbjk3QGdtYWlsLmNvbSJ9.PTUGLI1vxvRzLeXoA0pbyKFIX8gv1Cu8HTnvdWaSahA',
+    newBlog: {'title': null, 'text': null}
   },
   mounted: function(){
     this.get_all_blogs();
@@ -81,11 +82,34 @@ var mainapp = new Vue({
       })
       .then((response) => {
         this.leaderboard = response.data;
-        console.log(this.leaderboard)
+        // console.log(this.leaderboard)
         this.lboard_loading = false;
       })
       .catch((err) => {
         this.lboard_loading = false;
+        this.load_error = true;
+        console.log(err);
+      })
+    },
+    post_blog: function(){
+      this.loading = true;
+      this.$http.post('http://localhost:8000/api/v1/share/blogs/', this.newBlog, {
+        headers: {
+          'Authorization': this.token
+          }
+        })
+      .then((response) => {
+        // this.leaderboard = response.data;
+        console.log(response.data)
+        this.loading = false;
+        console.log('going to run');
+        this.get_all_blogs();
+        this.get_leaderboard();
+        $('#myModal').modal('hide');
+        console.log('ran');
+      })
+      .catch((err) => {
+        this.loading = false;
         this.load_error = true;
         console.log(err);
       })
