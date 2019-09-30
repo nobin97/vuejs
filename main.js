@@ -11,7 +11,7 @@ var mainapp = new Vue({
     load_error: false,
     leaderboard: [],
     blog_by_id: [],
-    token: 'Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Njk3NzA1NzgsInVzZXJfaWQiOiIyZWNkY2U1YS03OGJjLTQ2ZWItOThmYy03NTIxNGI2OGRjMDciLCJlbWFpbCI6Im5vYmluOTdAZ21haWwuY29tIiwidXNlcm5hbWUiOiJub2Jpbjk3QGdtYWlsLmNvbSJ9.PTUGLI1vxvRzLeXoA0pbyKFIX8gv1Cu8HTnvdWaSahA',
+    token: 'Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Im5vYmluOTdAZ21haWwuY29tIiwidXNlcl9pZCI6IjA1YzU5MmZjLTQzNWEtNGZiNS1hYzdiLWM0OTdiMDY1ZmQ5OCIsImV4cCI6MTU2OTg2OTIzMywiZW1haWwiOiJub2Jpbjk3QGdtYWlsLmNvbSJ9.l9qd8UknYxz9OSF7d_GmWZh5YRk8cCfnweYbSpNC-NE',
     newBlog: {'title': null, 'text': null}
   },
   mounted: function(){
